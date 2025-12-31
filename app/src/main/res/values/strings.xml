@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">VS Chat</string>
+    <string name="textview">TextView</string>
+    <string name="from">From</string>
+    <string name="From">From</string>
+    <string name="Techcoder_VS">TechCoder VS</string>
 </resources>
