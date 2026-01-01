@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "435768806500",
+    "project_id": "vs-chat-95c33",
+    "storage_bucket": "vs-chat-95c33.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435768806500:android:9b48a769d68f45d8b8a371",
+        "android_client_info": {
+          "package_name": "com.example.vschat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdDj1M9-KTkSgm5a55uddgwjrquDk096g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

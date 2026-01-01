@@ -4,4 +4,18 @@
     <string name="from">From</string>
     <string name="From">From</string>
     <string name="Techcoder_VS">TechCoder VS</string>
+    <string name="login">Login</string>
+    <string name="sign_in_to_continue">Sign in to continue.</string>
+    <string name="email">EMAIL</string>
+    <string name="password">PASSWORD</string>
+    <string name="emaill">Email</string>
+    <string name="passwordd">Password</string>
+    <string name="loginn">Login</string>
+    <string name="sign_up">SIGN UP!</string>
+    <string name="need_an_account">Need an account?</string>
+    <string name="create_new">Create New</string>
+    <string name="account">Account</string>
+    <string name="username">UserName</string>
+    <string name="re_enter_password">RE-ENTER PASSWORD</string>
+    <string name="signup">SIGNUP</string>
 </resources>
