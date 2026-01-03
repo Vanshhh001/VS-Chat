@@ -18,4 +18,6 @@
     <string name="username">UserName</string>
     <string name="re_enter_password">RE-ENTER PASSWORD</string>
     <string name="signup">SIGNUP</string>
+    <string name="usernamee">UserName</string>
+    <string name="loginnn">Login!</string>
 </resources>

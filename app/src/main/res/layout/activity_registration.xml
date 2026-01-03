@@ -9,10 +9,11 @@
     tools:context=".registration">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profilerg"
+        android:id="@+id/profilerg0"
         android:layout_width="151dp"
         android:layout_height="130dp"
         android:layout_marginEnd="128dp"
+        android:foregroundGravity="center"
         android:src="@drawable/photocamera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,7 +122,7 @@
         app:layout_constraintVertical_bias="0.709" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/rgemail"
         android:layout_width="236dp"
         android:layout_height="53dp"
         android:ems="10"
@@ -138,7 +139,7 @@
         app:layout_constraintVertical_bias="0.564" />
 
     <EditText
-        android:id="@+id/editTextTextPassword2"
+        android:id="@+id/rgpassword"
         android:layout_width="237dp"
         android:layout_height="56dp"
         android:ems="10"
@@ -155,7 +156,7 @@
         app:layout_constraintVertical_bias="0.631" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/rgrepassword"
         android:layout_width="237dp"
         android:layout_height="56dp"
         android:ems="10"
@@ -172,7 +173,7 @@
         app:layout_constraintVertical_bias="0.708" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/signupbutton"
         android:layout_width="@dimen/_250sdp"
         android:layout_height="@dimen/_45sdp"
         android:backgroundTint="@color/black"
@@ -187,12 +188,13 @@
         app:layout_constraintVertical_bias="0.852" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/loginbut"
         android:layout_width="@dimen/_124sdp"
         android:layout_height="@dimen/_24sdp"
         android:gravity="center"
-        android:text="Login!"
+        android:text="@string/loginnn"
         android:textColor="@color/black"
+        android:textSize="@dimen/_13sdp"
         android:textStyle="bold"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -203,11 +205,11 @@
         app:layout_constraintVertical_bias="0.931" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/rgusername"
         android:layout_width="236dp"
         android:layout_height="66dp"
         android:ems="10"
-        android:hint="UserName"
+        android:hint="@string/usernamee"
         android:inputType="textPersonName"
         android:text=""
         android:textStyle="bold"
