@@ -13,17 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.auth.api.signin.internal.Storage;
+//import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+//import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+//import com.google.firebase.storage.FirebaseStorage;
+//import com.google.firebase.storage.StorageReference;
+//import com.google.firebase.storage.UploadTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,7 +42,7 @@ public class registration extends AppCompatActivity {
     String imageuri;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     FirebaseDatabase database;
-    FirebaseStorage storage;
+   // FirebaseStorage storage;
 
 
 
@@ -49,8 +51,11 @@ public class registration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_registration);
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        // storage = FirebaseStorage.getInstance();
 
-        loginbut = findViewById(R.id.signupbutton);
+        loginbut = findViewById(R.id.loginbut);
         rg_username = findViewById(R.id.rgusername);
         rg_email = findViewById(R.id.rgemail);
         rg_password = findViewById(R.id.rgpassword);
@@ -87,24 +92,18 @@ public class registration extends AppCompatActivity {
                 }else if(!passwordd.equals(re_passwordd)){
                     rgre_password.setError("Password Does Not Match");
                 }else{
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+
                     auth.createUserWithEmailAndPassword(emaill, passwordd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                String id = task.getResult().getUser().getUid();
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
-                                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Upload").child(id);
+                                String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                               // DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
+                               // StorageReference storageReference = storage.getReference().child("Upload").child(id);
+                                                        Users users = new Users(id,namee, emaill, passwordd, "default", status);
 
-                                if(imageURI != null){
-                                    storageReference.putFile(imageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                            if(task.isSuccessful()){
-                                                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                    @Override
-                                                    public void onSuccess(Uri uri) {
-                                                        imageuri = uri.toString();
-                                                        Users users = new Users(id,namee, emaill, passwordd,re_passwordd, imageuri, status);
                                                         reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
@@ -116,22 +115,17 @@ public class registration extends AppCompatActivity {
                                                                     Toast.makeText(registration.this, "Error in creating the user", Toast.LENGTH_SHORT).show();
                                                                 }
                                                             }
-                                                        });
-                                                    }
-                                                });
 
-                                                }
 
-                                        }
+                                                      });
 
-                                    });
 
-                                    }else {
-                                    String status = "Hey There I Am Using VSChat";
-                                    //Users users = new Users(id, namee, emaill, password
-                                }
+                                                }else{
+                                                    Toast.makeText(registration.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                                 }
+
+
 
 
                             }
