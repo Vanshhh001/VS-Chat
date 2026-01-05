@@ -1,4 +1,5 @@
 package com.example.vschat;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ public class registration extends AppCompatActivity {
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     FirebaseDatabase database;
    // FirebaseStorage storage;
+    ProgressDialog progressDialog;
+
 
 
 
@@ -51,10 +54,14 @@ public class registration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_registration);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Establishing The Account");
+        progressDialog.setCancelable(false);
+
+
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         // storage = FirebaseStorage.getInstance();
-
         loginbut = findViewById(R.id.loginbut);
         rg_username = findViewById(R.id.rgusername);
         rg_email = findViewById(R.id.rgemail);
@@ -84,12 +91,16 @@ public class registration extends AppCompatActivity {
                 String status = "Hey There I Am Using VSChat";
 
                 if(TextUtils.isEmpty(namee) || TextUtils.isEmpty(emaill) || TextUtils.isEmpty(passwordd) || TextUtils.isEmpty(re_passwordd)){
+                    progressDialog.dismiss();
                     Toast.makeText(registration.this, "Please Enter Valid Information", Toast.LENGTH_SHORT).show();
                 }else if(!emaill.matches(emailPattern)) {
+                    progressDialog.dismiss();
                     rg_email.setError("Give Proper Email Address");
                 }else if(passwordd.length()<6){
+                    progressDialog.dismiss();
                     rg_password.setError("Password Must Be Greater Than 6 Characters");
                 }else if(!passwordd.equals(re_passwordd)){
+                    progressDialog.dismiss();
                     rgre_password.setError("Password Does Not Match");
                 }else{
                     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -108,6 +119,7 @@ public class registration extends AppCompatActivity {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 if (task.isSuccessful()) {
+                                                                    progressDialog.show();
                                                                     Intent intent = new Intent(registration.this, MainActivity.class);
                                                                     startActivity(intent);
                                                                     finish();
