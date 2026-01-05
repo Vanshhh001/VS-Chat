@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profilerg0"
+            android:id="@+id/userimg"
             android:layout_width="52.00dp"
             android:layout_height="52.00dp"
             android:layout_marginStart="13.00dp"
@@ -29,6 +29,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
@@ -38,11 +39,12 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/userstatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="10.40dp"
+
+                android:textSize="11.40dp"
                 android:text="Status" />
 
         </LinearLayout>
