@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.UploadTask;
+//import com.google.firebase.storage.UploadTask;
 //import com.google.firebase.storage.FirebaseStorage;
 //import com.google.firebase.storage.StorageReference;
 //import com.google.firebase.storage.UploadTask;
@@ -84,6 +84,7 @@ public class registration extends AppCompatActivity {
         rg_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 String namee = rg_username.getText().toString();
                 String emaill = rg_email.getText().toString();
                 String passwordd = rg_password.getText().toString();
@@ -104,46 +105,38 @@ public class registration extends AppCompatActivity {
                     rgre_password.setError("Password Does Not Match");
                 }else{
                     FirebaseAuth auth = FirebaseAuth.getInstance();
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+                    //DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
 
                     auth.createUserWithEmailAndPassword(emaill, passwordd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                               // DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
+                                String id = task.getResult().getUser().getUid();
+                                DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
                                // StorageReference storageReference = storage.getReference().child("Upload").child(id);
-                                                        Users users = new Users(id,namee, emaill, passwordd, "default", status);
+                                Users users = new Users(id,namee, emaill, passwordd, "default", status);
 
-                                                        reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    progressDialog.show();
-                                                                    Intent intent = new Intent(registration.this, MainActivity.class);
-                                                                    startActivity(intent);
-                                                                    finish();
-                                                                }else{
-                                                                    Toast.makeText(registration.this, "Error in creating the user", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            }
+                                    userReference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                      if (task.isSuccessful()) {
+                                      progressDialog.show();
+                                      Intent intent = new Intent(registration.this, MainActivity.class);
+                                      startActivity(intent);
+                                      finish();
+                                      }else{
+                                      Toast.makeText(registration.this, "Error in creating the user", Toast.LENGTH_SHORT).show();
+                                            }
+                                    }
+                                       });
 
-
-                                                      });
-
-
-                                                }else{
-                                                    Toast.makeText(registration.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
+                                        }else{
+                                          progressDialog.dismiss();  //Dismiss if auth fails
+                                          Toast.makeText(registration.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-
-
-
-
                             }
                         });
                 }
-
 
 
             }

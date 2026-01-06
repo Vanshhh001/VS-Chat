@@ -2,6 +2,7 @@ package com.example.vschat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -37,22 +39,38 @@ public class MainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
 
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
 
 
         database=FirebaseDatabase.getInstance();
         auth  = FirebaseAuth.getInstance();
 
-        DatabaseReference reference = database.getReference().child("user");
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference reference = database.getReference().child("Users");
 
         usersArrayList = new ArrayList<>();
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                usersArrayList.clear();
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    // Check if the data is actually a Map/Object before converting
+                    if (dataSnapshot.getValue() != null) {
+                        try {
+                            Users users = dataSnapshot.getValue(Users.class);
+                            if (users != null && !users.getUserId().equals(auth.getUid())) {
+                                usersArrayList.add(users);
+                            }
+                        } catch (Exception e) {
+                            // This prevents the app from crashing if there is one "bad" entry
+                            Log.e("FirebaseError", "Data conversion failed for: " + dataSnapshot.getKey());
+                        }
+                    }
                     Users users = dataSnapshot.getValue(Users.class);
-                    usersArrayList.add(users);
+
+                    if (users != null && !users.getUserId().equals(auth.getUid())) {
+                        usersArrayList.add(users);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -63,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mainUserRecyclerView = findViewById(R.id.mainUserRecycleView);
+        mainUserRecyclerView = findViewById(R.id.mainUserRecycle);
         mainUserRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new UserAdapter(MainActivity.this,usersArrayList);
 
