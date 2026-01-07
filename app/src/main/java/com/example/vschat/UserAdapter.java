@@ -1,5 +1,6 @@
 package com.example.vschat;
 
+import android.content.Intent;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
         holder.username.setText(users.userName);
         holder.userstatus.setText(users.status);
         Picasso.get().load(users.profilepic).into(holder.userimg);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mainActivity, chatWin.class);
+                intent.putExtra("nameee", users.getUserName());
+                intent.putExtra("reciverImg", users.getProfilepic());
+                intent.putExtra("uid", users.getUserId());
+                mainActivity.startActivity(intent);   //passing the data to the next activity
+
+
+            }
+        });
+
     }
 
     @Override
