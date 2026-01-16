@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VSChat">
         <activity
+            android:name=".setting"
+            android:exported="false" />
+        <activity
             android:name=".chatWin"
             android:exported="false" />
         <activity

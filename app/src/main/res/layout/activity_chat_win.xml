@@ -46,16 +46,16 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/msadaptor"
-        android:layout_width="match_parent"
-        android:layout_height="502dp"
+        android:id="@+id/msgadaptor"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/ll1"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="198dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="-11dp"
+        android:layout_marginTop="177dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="122dp"
         android:padding="13.00dp" />
 
     <LinearLayout
@@ -78,15 +78,16 @@
         android:layout_weight="1">
 
         <EditText
-            android:layout_width="338dp"
-            android:layout_height="45dp"
-            android:layout_marginLeft="@dimen/_20sdp"
+            android:id="@+id/textmsg"
+
+            android:layout_width="323dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/_20sdp"
             android:background="@null"
             android:fontFamily="@font/poppins_regular"
             android:hint="Type The Messages..."
-            android:paddingStart="13.00dp"/>
-
+            android:paddingStart="13.00dp" />
 
 
     </androidx.cardview.widget.CardView>
@@ -94,6 +95,7 @@
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/sendbtnn"
             android:layout_width="100.50dp"
             android:layout_height="45.50dp"
             android:background="@color/white"

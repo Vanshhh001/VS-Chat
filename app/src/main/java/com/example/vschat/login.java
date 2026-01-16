@@ -80,7 +80,7 @@ public class login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                progressDialog.show();
+
                                 try {
                                     Intent intend = new Intent(login.this, MainActivity.class);
                                     startActivity(intend);

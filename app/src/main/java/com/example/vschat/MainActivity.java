@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     ArrayList<Users> usersArrayList;
     ImageView imglogout;
+    ImageView camBut;
+    ImageView settingBut;
+
 
 
 
@@ -50,10 +53,20 @@ public class MainActivity extends AppCompatActivity {
         database=FirebaseDatabase.getInstance();
         auth  = FirebaseAuth.getInstance();
 
+        camBut = findViewById(R.id.camBut);
+        settingBut = findViewById(R.id.settingBut);
+
+
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference reference = database.getReference().child("Users");
 
         usersArrayList = new ArrayList<>();
+        mainUserRecyclerView = findViewById(R.id.mainUserRecycle);
+        mainUserRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new UserAdapter(MainActivity.this,usersArrayList);
+        mainUserRecyclerView.setAdapter(adapter);
+
+
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -117,17 +130,27 @@ public class MainActivity extends AppCompatActivity {
           }
         });
 
+//        mainUserRecyclerView = findViewById(R.id.mainUserRecycle);
+//        mainUserRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        adapter = new UserAdapter(MainActivity.this,usersArrayList);
+//
+//        mainUserRecyclerView.setAdapter(adapter);
 
+        settingBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, setting.class);
+                startActivity(intent);
+            }
+        });
 
-
-
-
-        mainUserRecyclerView = findViewById(R.id.mainUserRecycle);
-        mainUserRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new UserAdapter(MainActivity.this,usersArrayList);
-
-        mainUserRecyclerView.setAdapter(adapter);
-
+        camBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 10);
+            }
+        });
 
         if(auth.getCurrentUser() == null){
             Intent intent = new Intent(MainActivity.this, login.class);
